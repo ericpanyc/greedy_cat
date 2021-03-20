@@ -7,5 +7,5 @@ document.addEventListener("keydown", ({ keyCode }) => {
   state = move(state, KEY_DIRECTION_MAP[keyCode]);
 });
 setInterval(() => {
-  state = move(state, state.direction);
-}, 500);
+  state = move(state, state[0].direction);
+}, 100);

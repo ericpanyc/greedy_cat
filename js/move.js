@@ -1,9 +1,8 @@
-import { HEAD_IMAGE, BODY_IMAGE, TAIL_IMAGE } from './constants.js';
+import { image } from './image.js';
 
 export const move = (currentState, direction) => {
-  const currentPositions = currentState.positions;
-  const currentHead = currentPositions[0];
-  const currentDirection = currentState.direction;
+  const currentHead = currentState[0].coordinate;
+  const headDirection = currentState[0].direction;
 
   let newHead;
   switch (direction) {
@@ -23,28 +22,29 @@ export const move = (currentState, direction) => {
       return;
   }
 
-  let newPositions = [];
+  let nextState = [];
 
-  // set head
-  newPositions.push(newHead);
-  document.getElementById(`row${newHead[0]}col${newHead[1]}`).innerHTML = HEAD_IMAGE;
+  // set new head
+  nextState.push({ coordinate: newHead, direction: direction });
+  document.getElementById(`row${newHead[0]}col${newHead[1]}`).innerHTML = image('head', direction);
 
-  // set body
-  let pos;
-  for (let index = 0; index < currentPositions.length - 2; index++) {
-    pos = currentPositions[index];
-    newPositions.push(pos);
-    document.getElementById(`row${pos[0]}col${pos[1]}`).innerHTML = BODY_IMAGE;
+  // move
+  for (let i = 0; i < currentState.length; i++) {
+    let content;
+    if (i < currentState.length - 2) {
+      nextState.push(currentState[i]);
+      content = image('body', currentState[i].direction);
+    } else if (i === currentState.length - 2) {
+      nextState.push(currentState[i]);
+      content = image('tail', currentState[i].direction);
+    } else {
+      content = '';
+    }
+
+    document.getElementById(
+      `row${currentState[i].coordinate[0]}col${currentState[i].coordinate[1]}`
+    ).innerHTML = content;
   }
 
-  // set tail
-  pos = currentPositions[currentPositions.length - 2];
-  newPositions.push(pos);
-  document.getElementById(`row${pos[0]}col${pos[1]}`).innerHTML = TAIL_IMAGE;
-
-  // unset original tail
-  pos = currentPositions[currentPositions.length - 1];
-  document.getElementById(`row${pos[0]}col${pos[1]}`).innerHTML = "";
-
-  return { positions: newPositions, direction: direction }
+  return nextState;
 }
