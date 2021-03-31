@@ -1,11 +1,15 @@
 import { initGame } from './init_game.js';
 import { move } from './move.js';
-import { KEY_DIRECTION_MAP } from './constants.js';
+import { KEY_DIRECTION_MAP, BOARD_SIZE } from './constants.js';
 
 let state = initGame();
-document.addEventListener("keydown", ({ keyCode }) => {
-  state = move(state, KEY_DIRECTION_MAP[keyCode]);
-});
-setInterval(() => {
-  state = move(state, state[0].direction);
+
+const timer = setInterval(() => {
+  state = move(state, state[0].direction, timer);
 }, 100);
+
+document.addEventListener("keydown", ({ keyCode }) => {
+  if (KEY_DIRECTION_MAP[keyCode]) {
+    state = move(state, KEY_DIRECTION_MAP[keyCode], timer);
+  }
+});

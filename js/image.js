@@ -7,5 +7,5 @@ const DIRECTION_DEGREE_MAP = {
 
 export const image = (part, direction) => {
   const rotateDegree = DIRECTION_DEGREE_MAP[direction]
-  return `<img src="${part}.png" style="transform:rotate(${rotateDegree}deg);" height="20px">`;
+  return `<img src="${part}.png" style="transform:rotate(${rotateDegree}deg); display: block;" height="20px">`;
 };

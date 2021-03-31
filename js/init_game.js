@@ -3,7 +3,7 @@ import { image } from './image.js';
 
 export const initGame = () => {
   const tail = [
-    Math.floor(Math.random() * (BOARD_SIZE - 3)),
+    Math.floor(Math.random() * (BOARD_SIZE - 5)),
     Math.floor(Math.random() * BOARD_SIZE),
   ];
   const body = [tail[0], tail[1] + 1];
