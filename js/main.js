@@ -6,7 +6,7 @@ let state = initGame();
 
 const timer = setInterval(() => {
   state = move(state, state[0].direction, timer);
-}, 100);
+}, 1000);
 
 document.addEventListener("keydown", ({ keyCode }) => {
   if (KEY_DIRECTION_MAP[keyCode]) {

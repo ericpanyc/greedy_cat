@@ -24,9 +24,11 @@ export const calculateNextState = (currentState, direction) => {
 
   nextState.push({ coordinate: newHead, direction: direction });
 
-  for (let i = 0; i < currentState.length - 1; i++) {
+  for (let i = 0; i < currentState.length - 2; i++) {
     nextState.push(currentState[i]);
   }
+
+  nextState.push(currentState[currentState.length - 1]);
 
   return nextState;
 }
