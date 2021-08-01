@@ -1,29 +1,33 @@
 import { image } from './image.js';
 
 export const updateBoard = (currentState, nextState) => {
-  for (let i = 0; i < currentState.length; i++) {
+  for (let i = 0; i < currentState.cat.length; i++) {
     document.getElementById(
-      `row${currentState[i].coordinate[0]}col${currentState[i].coordinate[1]}`
+      `row${currentState.cat[i].coordinate[0]}col${currentState.cat[i].coordinate[1]}`
     ).innerHTML = '';
-    document.getElementById(
-        `row${currentState[i].coordinate[0]}col${currentState[i].coordinate[1]}`
-    ).style.color = '#6BBDD1';
   }
 
-  for (let i = 0; i < nextState.length; i++) {
+  document.getElementById(
+      `row${currentState.food.coordinate[0]}col${currentState.food.coordinate[1]}`
+  ).innerHTML = '';
+
+  for (let i = 0; i < nextState.cat.length; i++) {
     let bodyPart;
     if (i === 0) {
       bodyPart = 'head';
-    } else if (i === nextState.length - 2) {
+    } else if (i === nextState.cat.length - 1) {
       bodyPart = 'tail';
-    } else if (i === nextState.length - 1) {
-      bodyPart = 'food';
     } else {
       bodyPart = 'body';
     }
 
     document.getElementById(
-      `row${nextState[i].coordinate[0]}col${nextState[i].coordinate[1]}`
-    ).innerHTML = image(bodyPart, nextState[i].direction);
+      `row${nextState.cat[i].coordinate[0]}col${nextState.cat[i].coordinate[1]}`
+    ).innerHTML = image(bodyPart, nextState.cat[i].direction);
   }
+
+  document.getElementById(
+      `row${nextState.food.coordinate[0]}col${nextState.food.coordinate[1]}`
+  ).innerHTML = image('food', nextState.food.direction);
+
 }

@@ -1,20 +1,18 @@
 import { BOARD_SIZE } from './constants.js';
 import { image } from './image.js';
+import { updateFoodPos } from './update_food_pos.js';
 
 export const initGame = () => {
   const tail = [
     Math.floor(Math.random() * (BOARD_SIZE - 5)),
-    Math.floor(Math.random() * BOARD_SIZE),
+    Math.floor(3 + Math.random() * (BOARD_SIZE - 5)),
   ];
   const body = [tail[0], tail[1] + 1];
   const head = [tail[0], tail[1] + 2];
 
-  const food = [
-      Math.floor(1 + Math.random() * (BOARD_SIZE - 2)),
-      Math.floor(1 + Math.random() * (BOARD_SIZE - 2))
-  ];
+  const food = updateFoodPos([head, body, tail]);
 
-  let table = `<table width="${20 * BOARD_SIZE}px" cellspacing=0 cellpadding=0>`;
+  let table = `<table width="${20 * BOARD_SIZE}px" cellspacing=0 cellpadding=0 bgcolor = "#6BBDD1">`;
   for(let row = 0; row < BOARD_SIZE; row++) {
     table += '<tr height="20px">';
     for(let col = 0; col < BOARD_SIZE; col++) {
@@ -26,7 +24,7 @@ export const initGame = () => {
       } else if (row === food[0] && col === food[1]) {
         table += `<td id="row${row}col${col}">${image('food', 'right')}</td>`;
       }else {
-        table += `<td id="row${row}col${col}" bgcolor = "#6BBDD1"></td>`;
+        table += `<td id="row${row}col${col}" bgcolor =></td>`;
       }
     }
     table += '</tr>';
@@ -34,10 +32,12 @@ export const initGame = () => {
   table += '</table>';
 
   document.getElementById('game').innerHTML = table;
-  return [
-    { coordinate: head, direction: 'right' },
-    { coordinate: body, direction: 'right' },
-    { coordinate: tail, direction: 'right' },
-    { coordinate: food, direction: 'right' }
-  ];
+  return {
+    cat: [
+        { coordinate: head, direction: 'right' },
+      { coordinate: body, direction: 'right' },
+      { coordinate: tail, direction: 'right' },
+    ],
+    food: { coordinate: food, direction: 'right' }
+  };
 };

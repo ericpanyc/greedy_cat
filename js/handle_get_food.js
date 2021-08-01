@@ -1,24 +1,22 @@
-import {BOARD_SIZE} from './constants.js'
+import {BOARD_SIZE} from './constants.js';
+import {updateFoodPos} from './update_food_pos.js';
 
 export const handleGetFood = (currentState, nextState) => {
-    const newHead = nextState[0].coordinate;
-    const foodPos = currentState[currentState.length - 1].coordinate;
+    const newHead = nextState.cat[0].coordinate;
+    const foodPos = currentState.food.coordinate;
 
     if (newHead[0] === foodPos[0] && newHead[1] === foodPos[1]) {
-        nextState[0].coordinate = foodPos;
-        nextState[0].direction = nextState[0].direction;
+        nextState.cat[0].coordinate = foodPos;
 
-        for (let i = 1; i < nextState.length; i++) {
-            nextState[i].coordinate = currentState[i - 1].coordinate;
-            nextState[i].direction = currentState[i - 1].direction;
+        for (let i = 1; i < nextState.cat.length; i++) {
+            nextState.cat[i] = currentState.cat[i - 1];
         }
 
-        const newFood = [
-            Math.floor(1 + Math.random() * (BOARD_SIZE - 2)),
-            Math.floor(1 + Math.random() * (BOARD_SIZE - 2))
-        ];
+        nextState.cat.push(currentState.cat[currentState.cat.length - 1]);
 
-        nextState.push({ coordinate: newFood , direction : 'right' });
+        const newFood = updateFoodPos(nextState.cat);
+
+        nextState.food = { coordinate: newFood , direction : 'right' };
 
     }
 
