@@ -1,6 +1,6 @@
 export const calculateNextState = (currentState, direction) => {
-  const currentHead = currentState[0].coordinate;
-  const headDirection = currentState[0].direction;
+  const currentHead = currentState.cat[0].coordinate;
+  const headDirection = currentState.cat[0].direction;
 
   let newHead;
   switch (direction) {
@@ -24,9 +24,12 @@ export const calculateNextState = (currentState, direction) => {
 
   nextState.push({ coordinate: newHead, direction: direction });
 
-  for (let i = 0; i < currentState.length - 1; i++) {
-    nextState.push(currentState[i]);
+  for (let i = 0; i < currentState.cat.length - 1; i++) {
+    nextState.push(currentState.cat[i]);
   }
 
-  return nextState;
+  return {
+    cat: nextState,
+    food: currentState.food,
+  };
 }
