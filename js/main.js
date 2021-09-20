@@ -21,11 +21,13 @@ const checkDirValid = (curDir, prevDir) => {
       break;
     case 'right':
       return prevDir !== 'left';
+      break;
     case 'up':
       return prevDir !== 'down';
       break;
     case 'down':
       return prevDir !== 'up';
+      break;
     default:
       return;
   }
